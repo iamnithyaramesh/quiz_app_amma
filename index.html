@@ -205,7 +205,7 @@
     }
 
     .credits{
-      font-size: 24px;
+      font-size: 26px;
       color: #222;
       margin-top:100px;
       font-family: 'Raleway', sans-serif;
@@ -224,7 +224,7 @@
     </h1>
     <button class="btn-next" onclick="nextSlide()">Let's get started</button>
     <div class="credits">
-      <p> Curated and Designed by: Smt. D Suganya , Addl.Asst.Director</p>
+      <p> Curated and Designed by: Smt. D Suganya , Addl.Asst.Director and R.Nithyasri , D/O Smt.D.Suganya</p>
     </div>
   </div>
 
@@ -249,13 +249,7 @@
   ========================================== -->
   <div id="thankYouSlide" class="slide">
     <h1 class="animate__animated animate__fadeInUp"> Thank You! </h1>
-    <p>Credits: Quiz compiled with love </p>
-    <p>Special thanks to the organizers, participants, and well-wishers!</p>
-
-    <div class="credits">
-      <p> Compiled by: Team IRS Trainee Quiz</p>
-      <p> Supported by: Faculty & Mentors</p>
-      <p> Special mention: All enthusiastic participants!</p>
+    <button class="btn-next">Hope you enjoyed our session!</button>
     </div>
   </div>
 
@@ -313,7 +307,7 @@
         { num: "7", q: "The 'Nalleppilly earthquake' of 1900 occurred near city Y (in Tamil Nadu). Nalleppilly is in Kerala, but the quake’s effects reached this Tamil Nadu city. This is considered as a rare and significant seismic event in South India. Name the city Y.", a: "Coimbatore" },
         { num: "8", q: "On 26th January —-, this milestone in the Indian Freedom Struggle was ushered in Madras by unfurling Swaraj flags in various parts of the town. Desoddharaka Kasinathuni Nageshwara Rao led the march through historic places like Mint Street etc , showing the region's resistance towards the colonial rule. Give the year / event.", a: "1930 — First Independence Day (Poorna Swaraj Declaration)" },
         { num: "9", q: "The city of Madras claimed its first Guinness record in a sorrowful manner. Millions arrived by overcrowded trains and lorries, hotels shut, food prices spiked, and garbage piled up the city and the city looked as if it has bit a cyclone. Identify this Guinness event.", a: "1969 Shri. C. N Annadurai’s Funeral Procession — World’s Largest Funeral Gathering" },
-        { num: "10", image:"round3.png", q: "Bonus Flashcard: Who fills the spot No 2 ?", a: "Ravichandran Ashwin" }
+        { num: "10", image:"round3.png", q: " Who fills the spot No 2 ?", a: "Shri.Ravichandran Ashwin" }
       ],
       round4: [
         { num: "1", images: ["q1pic1.jpg", "q1pic2.jpeg", "q1pic3.png"], q: "Picture Question 1: Connect these pictures", a: "Indian Mathematical Society (Founders , 1911 - Publishing of Ramanujan's works and Honour Stamp)" },
@@ -325,128 +319,142 @@
     };
 
     let currentRound = "round1";
-    let timerInterval;
-    let timeLeft = 120;
-    let openedCards = new Set();
-    const slides = document.querySelectorAll('.slide');
-    let currentSlide = 0;
+  let timerInterval;
+  let timeLeft = 120;
+  let openedCards = new Set();
+  const slides = document.querySelectorAll('.slide');
+  let currentSlide = 0;
 
-    function nextSlide() {
-      slides[currentSlide].classList.remove('active-slide');
-      currentSlide++;
-      slides[currentSlide].classList.add('active-slide');
-      if (currentSlide === 1) {
-        renderFlashcards();
-      }
+  function nextSlide() {
+    slides[currentSlide].classList.remove('active-slide');
+    currentSlide++;
+    slides[currentSlide].classList.add('active-slide');
+    if (currentSlide === 1) {
+      renderFlashcards();
     }
+  }
 
-    const grid = document.getElementById("flashcardGrid");
-    const nextRoundBtn = document.getElementById("nextRoundBtn");
-    const nextRound3Btn = document.getElementById("nextRound3Btn");
-    const nextRound4Btn = document.getElementById("nextRound4Btn");
-    const endQuizBtn = document.getElementById("endQuizBtn");
-    const roundTitle = document.getElementById("round-title");
+  const grid = document.getElementById("flashcardGrid");
+  const nextRoundBtn = document.getElementById("nextRoundBtn");
+  const nextRound3Btn = document.getElementById("nextRound3Btn");
+  const nextRound4Btn = document.getElementById("nextRound4Btn");
+  const endQuizBtn = document.getElementById("endQuizBtn");
+  const roundTitle = document.getElementById("round-title");
 
-    function renderFlashcards() {
-      grid.innerHTML = "";
-      openedCards.clear();
-      quizData[currentRound].forEach((item, idx) => {
-        const card = document.createElement("div");
-        card.className = "flashcard";
-        card.innerHTML = `<h5>${item.domain || item.num}</h5>`;
-        card.onclick = () => openQuestion(idx, card);
-        grid.appendChild(card);
+  function renderFlashcards() {
+    grid.innerHTML = "";
+    openedCards.clear();
+
+    // loop through the data for the current round
+    quizData[currentRound].forEach((item, idx) => {
+      const card = document.createElement("div");
+      card.className = "flashcard";
+      card.innerHTML = `<h5>${item.domain || item.num}</h5>`;
+      card.onclick = () => openQuestion(idx, card);
+      grid.appendChild(card);
+    });
+  }
+
+  function openQuestion(index, cardElement) {
+    const qData = quizData[currentRound][index];
+
+    // set modal title + content
+    document.getElementById("modalTitle").innerText = qData.domain || `Question ${qData.num}`;
+    document.getElementById("modalQuestion").innerText = qData.q;
+    document.getElementById("answerBox").innerText = qData.a;
+    document.getElementById("answerBox").style.display = "none";
+
+    // handle images
+    const singleImg = document.getElementById("questionImg");
+    const multiImg = document.getElementById("multiImgContainer");
+    multiImg.innerHTML = "";
+
+    if (qData.images) {
+      qData.images.forEach(src => {
+        const img = document.createElement("img");
+        img.src = src;
+        multiImg.appendChild(img);
       });
-      if(currentRound === "round1") grid.classList.add("two-row");
-      else grid.classList.remove("two-row");
+      multiImg.classList.remove("d-none");
+      singleImg.classList.add("d-none");
+    } else if (qData.image) {
+      singleImg.src = qData.image;
+      singleImg.classList.remove("d-none");
+      multiImg.classList.add("d-none");
+    } else {
+      singleImg.classList.add("d-none");
+      multiImg.classList.add("d-none");
     }
 
-    function openQuestion(index, cardElement) {
-      const qData = quizData[currentRound][index];
-      document.getElementById("modalTitle").innerText = qData.domain || `Question ${qData.num}`;
-      document.getElementById("modalQuestion").innerText = qData.q;
-      document.getElementById("answerBox").innerText = qData.a;
-      document.getElementById("answerBox").style.display = "none";
+    // show modal
+    resetTimer();
+    const modal = new bootstrap.Modal(document.getElementById("questionModal"));
+    modal.show();
 
-      const singleImg = document.getElementById("questionImg");
-      const multiImg = document.getElementById("multiImgContainer");
-      multiImg.innerHTML = "";
+    // mark card as done
+    openedCards.add(index);
+    cardElement.classList.add("done");
 
-      if (qData.images) {
-        qData.images.forEach(src => {
-          const img = document.createElement("img");
-          img.src = src;
-          multiImg.appendChild(img);
-        });
-        multiImg.classList.remove("d-none");
-        singleImg.classList.add("d-none");
-      } else if (qData.image) {
-        singleImg.src = qData.image;
-        singleImg.classList.remove("d-none");
-        multiImg.classList.add("d-none");
-      } else {
-        singleImg.classList.add("d-none");
-        multiImg.classList.add("d-none");
-      }
-
-      resetTimer();
-      const modal = new bootstrap.Modal(document.getElementById("questionModal"));
-      modal.show();
-      openedCards.add(index);
-      cardElement.classList.add("done");
-
-      if (openedCards.size === quizData[currentRound].length) {
-        if(currentRound === "round1") nextRoundBtn.classList.remove("d-none");
-        else if(currentRound === "round2") nextRound3Btn.classList.remove("d-none");
-        else if(currentRound === "round3") nextRound4Btn.classList.remove("d-none");
-      }
+    // if all cards are done → show next button
+    if (openedCards.size === quizData[currentRound].length) {
+      if (currentRound === "round1") nextRoundBtn.classList.remove("d-none");
+      else if (currentRound === "round2") nextRound3Btn.classList.remove("d-none");
+      else if (currentRound === "round3") nextRound4Btn.classList.remove("d-none");
+      else if (currentRound === "round4") endQuizBtn.classList.remove("d-none");
     }
+  }
 
-    function resetTimer() {
-      clearInterval(timerInterval);
-      timeLeft = 120;
+  function resetTimer() {
+    clearInterval(timerInterval);
+    timeLeft = 120;
+    document.getElementById("timer").innerText = formatTime(timeLeft);
+    timerInterval = setInterval(() => {
+      timeLeft--;
       document.getElementById("timer").innerText = formatTime(timeLeft);
-      timerInterval = setInterval(() => {
-        timeLeft--;
-        document.getElementById("timer").innerText = formatTime(timeLeft);
-        if (timeLeft <= 0) {
-          clearInterval(timerInterval);
-          revealAnswer();
-        }
-      }, 1000);
-    }
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        revealAnswer();
+      }
+    }, 1000);
+  }
 
-    function formatTime(sec) {
-      const m = Math.floor(sec / 60);
-      const s = sec % 60;
-      return `${m}:${s.toString().padStart(2,"0")}`;
-    }
+  function formatTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    return `${m}:${s.toString().padStart(2,"0")}`;
+  }
 
-    function revealAnswer() {
-      document.getElementById("answerBox").style.display = "block";
-    }
+  function revealAnswer() {
+    document.getElementById("answerBox").style.display = "block";
+  }
 
-    document.getElementById("revealBtn").addEventListener("click", revealAnswer);
-    nextRoundBtn.addEventListener("click", () => {
-      currentRound = "round2";
-      renderFlashcards();
-      roundTitle.innerText = "Round 1 - Quizzer's Choice";
-      nextRoundBtn.classList.add("d-none");
-    });
-    nextRound3Btn.addEventListener("click", () => {
-      currentRound = "round3";
-      renderFlashcards();
-      roundTitle.innerText = "Round 2: Number Game";
-      nextRound3Btn.classList.add("d-none");
-    });
-    nextRound4Btn.addEventListener("click", () => {
-      currentRound = "round4";
-      renderFlashcards();
-      roundTitle.innerText = "Round 3: Picture Perfect";
-      nextRound4Btn.classList.add("d-none");
-    });
+  // Event listeners
+  document.getElementById("revealBtn").addEventListener("click", revealAnswer);
 
-    
-  </script>
-</body>
-</html>
+  nextRoundBtn.addEventListener("click", () => {
+    currentRound = "round2";
+    renderFlashcards();
+    roundTitle.innerText = "Round 1 - Quizzer's Choice";
+    nextRoundBtn.classList.add("d-none");
+  });
+
+  nextRound3Btn.addEventListener("click", () => {
+    currentRound = "round3";
+    renderFlashcards();
+    roundTitle.innerText = "Round 2 - Number Game";
+    nextRound3Btn.classList.add("d-none");
+  });
+
+  nextRound4Btn.addEventListener("click", () => {
+    currentRound = "round4";
+    renderFlashcards();
+    roundTitle.innerText = "Round 3 - Picture Perfect";
+    nextRound4Btn.classList.add("d-none");
+  });
+
+  endQuizBtn.addEventListener("click", () => {
+    slides[currentSlide].classList.remove("active-slide");
+    currentSlide = slides.length - 1; // go to thank you slide
+    slides[currentSlide].classList.add("active-slide");
+  });
+</script>
