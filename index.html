@@ -12,45 +12,62 @@
   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
+    /* =============================
+       GENERAL STYLES
+    ============================== */
+    body {
+      background: linear-gradient(to right, #f5f7fa, #5c86c5);
+      font-family: 'Roboto', sans-serif;
+      font-size: 50px;
+      color: #333;
+    }
+
     h1 {
       font-size: 60px;
       font-weight: 800;
       color: #082335;
       margin-bottom: 20px;
-      margin-top:100px;
+      margin-top: 100px;
     }
-    body { 
-      background: linear-gradient(to right, #f5f7fa, #5c86c5); 
-      font-family: 'Roboto', sans-serif;
-      font-size: 50px;
-      color: #333;
+
+    h1, h2, h3, h4, h5 {
+      font-family: 'Raleway', sans-serif;
     }
+
+    /* =============================
+       SLIDES
+    ============================== */
     .slide {
       display: none;
       text-align: center;
       padding: 80px 20px;
     }
+
     .active-slide {
       display: block;
       animation: fadeIn 1s ease-in-out;
     }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .quiz-container { max-width: 1200px; margin: 40px auto; }
-    h1, h2, h3, h4, h5 {
-      font-family: 'Raleway', sans-serif;
+    .quiz-container {
+      max-width: 1200px;
+      margin: 40px auto;
     }
-    #round-title { 
-      font-size: 65px; 
-      color: #082335; 
+
+    #round-title {
+      font-size: 65px;
+      color: #082335;
       margin-bottom: 20px;
       font-weight: 800;
     }
 
-    /* Buttons */
+    /* =============================
+       BUTTONS
+    ============================== */
     .btn-next {
       font-size: 60px;
       padding: 20px 50px;
@@ -63,60 +80,83 @@
       transition: transform 0.2s ease, background 0.3s ease;
       font-family: 'Raleway', sans-serif;
     }
+
     .btn-next:hover {
       transform: scale(1.1);
       background: #e64a19;
     }
 
-    /* Flashcards Grid */
-    .flashcard-grid { 
-      display: grid; 
-      grid-template-columns: repeat(3, 1fr); 
-      grid-auto-rows: 180px; 
-      gap: 25px; 
+    /* =============================
+       FLASHCARDS GRID
+    ============================== */
+    .flashcard-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr); /* always 5 per row */
+      grid-auto-rows: 250px;
+      gap: 25px;
       margin-top: 30px;
+      width: 100%
     }
-    .flashcard-grid.two-row { 
-      grid-template-rows: 180px 180px;
-    }
-    .flashcard { 
-      background: #ffffff; 
-      border-radius: 16px; 
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1); 
-      display: flex; 
-      justify-content: center; 
-      align-items: center; 
-      cursor: pointer; 
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    .flashcard {
+      background: #d3a4d8; /* changed color */
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
       position: relative;
       overflow: hidden;
-      font-size: 25px;
+      font-size: 28px;
+      padding: 10px;
     }
+
     .flashcard:hover {
-      transform: translateY(-5px) scale(1.05); 
-      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 14px 28px rgba(0,0,0,0.2);
+      background: #345d7a;
     }
-    .flashcard h5 { 
-      font-size: 45px; 
-      font-weight: 700; 
-      color: #1e2d3b; 
+
+    .flashcard h5 {
+      font-size: 32px;
+      font-weight: 700;
+      color: #15181b;
       text-align: center;
       padding: 10px;
     }
+
+    .flashcard img {
+      width: 200px;   /* increased size */
+      height: 200px;  /* increased size */
+      object-fit: contain;
+      margin-top: 10px;
+    }
+
     .flashcard.done::after {
-      content: "\f00c"; 
-      font-family: "Font Awesome 6 Free"; 
+      content: "\f00c";
+      font-family: "Font Awesome 6 Free";
       font-weight: 900;
       color: #ff7043;
       position: absolute;
-      top: 10px; 
-      right: 10px; 
+      top: 10px;
+      right: 10px;
       font-size: 35px;
     }
 
-    /* Modal Styling */
-    .modal-lg { max-width: 1000px; }
-    .modal-body p { font-size: 35px; }
+    /* =============================
+       MODAL
+    ============================== */
+    .modal-lg {
+      max-width: 1000px;
+    }
+
+    .modal-body p {
+      font-size: 35px;
+    }
+
     .answer-box {
       margin-top: 20px;
       padding: 20px;
@@ -127,30 +167,70 @@
       font-weight: 700;
       font-size: 35px;
     }
+
     .multi-img-container {
       display: flex;
       justify-content: center;
-      gap: 15px;
+      gap: 20px;
       margin-bottom: 20px;
     }
+
     .multi-img-container img {
-      width: 200px;
-      height: 200px;
+      width: 300px;   /* increased size */
+      height: 300px;
       object-fit: contain;
-      border-radius: 12px;
+      border-radius: 14px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    /* =============================
+       THANK YOU SLIDE
+    ============================== */
+    #thankYouSlide h1 {
+      font-size: 80px;
+      color: #082335;
+    }
+
+    #thankYouSlide p {
+      font-size: 40px;
+      font-weight: 600;
+      margin-top: 30px;
+    }
+
+    #thankYouSlide .credits {
+      margin-top: 40px;
+      font-size: 28px;
+      color: #222;
+      text-align: center;
+    }
+
+    .credits{
+      font-size: 24px;
+      color: #222;
+      margin-top:100px;
+      font-family: 'Raleway', sans-serif;
+
     }
   </style>
 </head>
 <body>
 
-  <!-- Starting Slide -->
+  <!-- =========================================
+       STARTING SLIDE
+  ========================================== -->
   <div id="startSlide" class="slide active-slide">
-    <h1 class="animate__animated animate__fadeInDown"> Test your Knowledge - Madrasi Style!</h1>
+    <h1 class="animate__animated animate__fadeInDown">
+      Test your Knowledge - Madrasi Style!
+    </h1>
     <button class="btn-next" onclick="nextSlide()">Let's get started</button>
+    <div class="credits">
+      <p> Curated and Designed by: Smt. D Suganya , Addl.Asst.Director</p>
+    </div>
   </div>
 
-  <!-- Quiz Slide -->
+  <!-- =========================================
+       QUIZ SLIDE
+  ========================================== -->
   <div id="quizSlide" class="slide">
     <div class="container quiz-container text-center">
       <h4 id="round-title">Round 1 - Quizzer's Choice</h4>
@@ -159,11 +239,29 @@
         <button id="nextRoundBtn" class="btn btn-success btn-lg d-none">Next</button>
         <button id="nextRound3Btn" class="btn btn-success btn-lg d-none">Go to Round 2</button>
         <button id="nextRound4Btn" class="btn btn-success btn-lg d-none">Go to Round 3</button>
+        <button id="endQuizBtn" class="btn btn-success btn-lg d-none">End Quiz</button>
       </div>
     </div>
   </div>
 
-  <!-- Modal -->
+  <!-- =========================================
+       THANK YOU SLIDE
+  ========================================== -->
+  <div id="thankYouSlide" class="slide">
+    <h1 class="animate__animated animate__fadeInUp"> Thank You! </h1>
+    <p>Credits: Quiz compiled with love </p>
+    <p>Special thanks to the organizers, participants, and well-wishers!</p>
+
+    <div class="credits">
+      <p> Compiled by: Team IRS Trainee Quiz</p>
+      <p> Supported by: Faculty & Mentors</p>
+      <p> Special mention: All enthusiastic participants!</p>
+    </div>
+  </div>
+
+  <!-- =========================================
+       QUESTION MODAL
+  ========================================== -->
   <div class="modal fade" id="questionModal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content animate__animated animate__fadeInUp">
@@ -186,41 +284,42 @@
     </div>
   </div>
 
+
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     const quizData = {
       round1: [
-        { domain: "Famous Personalities", q: "This very famous person X ,whose father was an electrical engineer at  General Electrics Limited , had to struggle a lot to  arrange flight tickets to travel to the place which changed his life forever. While recounting on the hardships he faced during his childhood , he said, “We waited five years for a telephone… But when it came to our home, it changed our lives,” . Identify person X.", a: "Sundar Pichai" },
+        { domain: "Famous Personalities", q: "This very famous person X ,whose father was an electrical engineer at  General Electrics Limited , had to struggle a lot to  arrange flight tickets to travel to the place which changed his life forever. While recounting on the hardships he faced during his childhood , he said, “We waited five years for a telephone… But when it came to our home, it changed our lives,” . Identify person X.", a: "Shri.Sundar Pichai" },
         { domain: "Food and Delicacies", q: "This very  popular drink whose name means 'something that cools the heart' in Hindi has a debated origin, with some  believing it  to be a variation of a drink brought by settlers during the Mughal era. The current recipe of this drink was perfected by  Shri P. Sheik Meeran, and still remains as a closely guarded secret. Identify the drink.", a: "Jigarthanda" },
         { domain: "Culture and Heritage", q: "The main legend surrounding the very popular tourist spot X is the myth of the ‘Seven Pagodas’ which claims that the temple is part of a larger complex of seven temples, and the other six were swallowed by the sea when Lord Indra, in a fit of jealousy, unleashed a great storm. The town housing this spot rose to prominence the years before COVID , becoming the centerstage for an international landmark event. Identify the spot X and give the recent event .", a: "Shore Temple, Mahabalipuram — 2019 Modi-Xi Summit" },
-        { domain: "Cinema", q: "This legendary Indian actor,X, who had already delivered back-to-back successes in Hindi cinema during the late 70s and 80s, was suddenly sidelined from Bollywood. Despite popular films in Hindi making him a household name, he withdrew gracefully, channeling his genius back into his home industry—where he later created timeless works. Identify the actor", a: "Kamal Haasan" },
+        { domain: "Cinema", q: "This legendary Indian actor,X, who had already delivered back-to-back successes in Hindi cinema during the late 70s and 80s, was suddenly sidelined from Bollywood. Despite popular films in Hindi making him a household name, he withdrew gracefully, channeling his genius back into his home industry—where he later created timeless works. Identify the actor", a: "Shri.Kamal Haasan" },
         { domain: "Geography", q: "The main legend associated with this unique geographical distinction of the state is its connection to the birth of Lord Nataraja . The forest's original name, Thillai Vanam comes from the poisonous, thick, and impenetrable Thillai shrub that grows there, making it a severe and inhospitable environment. Now , it is popularly known by the name Y and serves as a contrast to the geographical features that are found in the rest of the State. Identify the geographical landmark Y.", a: "Pichavaram Mangrove Forest" }
       ],
       round2: [
-        { domain: "Famous Personalities", q: "This person who is currently in the news , was a college champion in table tennis and long-distance running and still maintains a strong interest in sports. Fondly called as ‘Pachai Tamizhan’ (true-blue Tamilian), he is appreciated for his humility, steadiness, and deep cultural rootedness, even as he rose to national prominence . Who is this?", a: "C P Radhakrishnan, Vice President of India" },
+        { domain: "Famous Personalities", q: "This person who is currently in the news , was a college champion in table tennis and long-distance running and still maintains a strong interest in sports. Fondly called as ‘Pachai Tamizhan’ (true-blue Tamilian), he is appreciated for his humility, steadiness, and deep cultural rootedness, even as he rose to national prominence . Who is this?", a: "Shri.C P Radhakrishnan, Vice President of India" },
         { domain: "Food and Delicacies", q: "In the early 1900s, Krishna Singh of a Rajput family started a small shop in a town , which now has this delicacy as its prime attraction. The place became iconic for this dish whose distinctive taste comes from the waters of the nearby flowing river. The shop comes with a specific name as it was always dimly lit by just a single lamp, a tradition that continues to this day. Identify the dish and the river/town associated with it.", a: "Thirunelveli Halwa (Iruttukadai), Thamirabarani River" },
         { domain: "Culture and Heritage", q: "Built in the late 7th–early 8th century CE by the Pallava ruler Narasimhavarman II (Rajasimha), this temple is the earliest extant structural temple of Tamil Nadu. Declared as an UNESCO World Heritage Site , its sandstone shrines are connected by a circumambulatory passage symbolising the devotee’s spiritual journey, where one enters through a narrow passage and emerges purified, a ritual likened to rebirth.Identify the temple X.", a: "Kailasanathar Temple, Kanchipuram" },
-        { domain: "Cinema", q: "This multi-lingual Indian actor, X, trained with the British Army, Royal Navy, and Royal Air Force as an NCC cadet before missing the age cut-off to join the services. He later represented India at the Young Businessmen Conference in Tokyo and is a long-time advocate for animal rights with PETA.One of his most popular roles as a student in a highly popular Bollywood movie. Identify the actor X", a: "R. Madhavan" },
+        { domain: "Cinema", q: "This multi-lingual Indian actor, X, trained with the British Army, Royal Navy, and Royal Air Force as an NCC cadet before missing the age cut-off to join the services. He later represented India at the Young Businessmen Conference in Tokyo and is a long-time advocate for animal rights with PETA.One of his most popular roles as a student in a highly popular Bollywood movie. Identify the actor X", a: "Shri.R. Madhavan" },
         { domain: "Geography", q: "The etymology of the name of this geographical landmark of Tamil Nadu comes from the Kannada word for 'Big Mountain', and is situated at the very junction of the Eastern and Western Ghats. After its cessation by the British in 1789, the place became a popular European tourist spot , offering 360 degree panoramic views of the surrounding region. Identify the spot.", a: "Doddabetta Peak" }
       ],
       round3: [
         { num: "1", q: "The company X, was founded as a small unit manufacturing toy balloons in a shed in Madras in 1946. The trademarks of this company include a very iconic 'Muscleman' logo created as part of a marketing campaign to emphasize the strength and power of its product. Identify the company X.", a: "MRF (Madras Rubber Factory)" },
-        { num: "2", q: "In India's first Test victory against England in 1952 at M. A. Chidambaram Stadium, Chennai, one player's all-round brilliance—taking 12 wickets (including 8 in the first innings) and making crucial batting contributions—was central to the historic win. His name also contributes to a very controversial cricketing practice. Identify this player.", a: "Vinoo Mankad" },
+        { num: "2", q: "In India's first Test victory against England in 1952 at M. A. Chidambaram Stadium, Chennai, one player's all-round brilliance—taking 12 wickets (including 8 in the first innings) and making crucial batting contributions—was central to the historic win. His name also contributes to a very controversial cricketing practice. Identify this player.", a: "Shri.Vinoo Mankad" },
         { num: "3", q: "According to Ramayana, after performing the Ashwamedha Yagam, Lord Rama’s sons Luv and Kush tied the sacrificial horse at a place in present-day Chennai. The locality’s name is derived from the Sanskrit word for 'horse'. Identify this famous locality of Chennai.", a: "Koyambedu (from 'Ko' = horse)" },
         { num: "4", q: "On 20 August 1639, an official of the British East India Company named Francis Day negotiated with the Vijayanagar ruler Peda Venkata Raya to secure a piece of land on the Coromandel Coast for trading. A year later, the Company built X, the first major English settlement in India . Identify X.", a: "Fort St. George, Madras" },
         { num: "5", q: "The place originally known as 'Shreepada Parai' is believed to be the spot where Mother Parvati once did penance. Later, it became synonymous with a life event associated with another famous personality and was rejuvenated in his/her honor by Sri Eknath Ranade. Identify the place and person.", a: "Vivekananda Rock Memorial, Kanyakumari — Swami Vivekananda" },
         { num: "6", q: "This event X is considered the first of its kind, held on July 10, 1806 , much before a similar triggering that happened in North India. Triggered by prohibitions on forehead markings and mandatory hats instead of turbans. Identify the event X / city associated with it.", a: "Vellore Mutiny (Vellore, Tamil Nadu)" },
         { num: "7", q: "The 'Nalleppilly earthquake' of 1900 occurred near city Y (in Tamil Nadu). Nalleppilly is in Kerala, but the quake’s effects reached this Tamil Nadu city. This is considered as a rare and significant seismic event in South India. Name the city Y.", a: "Coimbatore" },
         { num: "8", q: "On 26th January —-, this milestone in the Indian Freedom Struggle was ushered in Madras by unfurling Swaraj flags in various parts of the town. Desoddharaka Kasinathuni Nageshwara Rao led the march through historic places like Mint Street etc , showing the region's resistance towards the colonial rule. Give the year / event.", a: "1930 — First Independence Day (Poorna Swaraj Declaration)" },
-        { num: "9", q: "The city of Madras claimed its first Guinness record in a sorrowful manner. Millions arrived by overcrowded trains and lorries, hotels shut, food prices spiked, and garbage piled up the city and the city looked as if it has bit a cyclone. Identify this Guinness event.", a: "1969 Annadurai’s Funeral Procession — World’s Largest Funeral Gathering" },
+        { num: "9", q: "The city of Madras claimed its first Guinness record in a sorrowful manner. Millions arrived by overcrowded trains and lorries, hotels shut, food prices spiked, and garbage piled up the city and the city looked as if it has bit a cyclone. Identify this Guinness event.", a: "1969 Shri. C. N Annadurai’s Funeral Procession — World’s Largest Funeral Gathering" },
         { num: "10", image:"round3.png", q: "Bonus Flashcard: Who fills the spot No 2 ?", a: "Ravichandran Ashwin" }
       ],
       round4: [
         { num: "1", images: ["q1pic1.jpg", "q1pic2.jpeg", "q1pic3.png"], q: "Picture Question 1: Connect these pictures", a: "Indian Mathematical Society (Founders , 1911 - Publishing of Ramanujan's works and Honour Stamp)" },
-        { num: "2", images: ["q2pic1.jpg", "q2pic2.png", "q2pic3.jpeg"], q: "Picture Question 2: Connect these images to a person", a: "A R Rahman- (Came on Doordharshan - Wonder Balloons show , Airtel Jingle , Called as 'Mozart of Madras')" },
+        { num: "2", images: ["q2pic1.jpg", "q2pic2.png", "q2pic3.jpeg"], q: "Picture Question 2: Connect these images to a person", a: "Shri.A R Rahman- (Came on Doordharshan - Wonder Balloons show , Airtel Jingle , Called as 'Mozart of Madras')" },
         { num: "3", images: ["q3pic1.avif", "q3pic2.jpeg", "q3pic3.jpg"], q: "Picture Question 3: What do these pictures denote", a: "Construction of a new SSLV launchpad at Kulasekharapattinam (Rocket Launch , Site Plan and Trajectory of Launch)" },
-        { num: "4", images: ["q4pic1.jpeg", "q4pic2.jpeg", "q4pic3.jpg"], q: "Picture Question 4: Identify the personality who is a common link between these pictures", a: "M S Swaminathan - (Daughter- Sowmya Swaminathan , Green Revolution and Recipient of World Food Prize)" },
+        { num: "4", images: ["q4pic1.jpeg", "q4pic2.jpeg", "q4pic3.jpg"], q: "Picture Question 4: Identify the personality who is a common link between these pictures", a: "Shri.M S Swaminathan - (Daughter- Smt.Sowmya Swaminathan , Green Revolution and Recipient of World Food Prize)" },
         { num: "5", images: ["q5pic1.jpeg", "q5pic2.jpg", "q5pic3.jpg"], q: "Picture Question 5: Find the commonality between these pictures ", a: "The Hindu Newspaper (Founders , Office and the Kamadhenu - part of the newspaper symbol)" }
       ]
     };
@@ -245,6 +344,7 @@
     const nextRoundBtn = document.getElementById("nextRoundBtn");
     const nextRound3Btn = document.getElementById("nextRound3Btn");
     const nextRound4Btn = document.getElementById("nextRound4Btn");
+    const endQuizBtn = document.getElementById("endQuizBtn");
     const roundTitle = document.getElementById("round-title");
 
     function renderFlashcards() {
@@ -345,6 +445,8 @@
       roundTitle.innerText = "Round 3: Picture Perfect";
       nextRound4Btn.classList.add("d-none");
     });
+
+    
   </script>
 </body>
 </html>
